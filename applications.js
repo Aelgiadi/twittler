@@ -44,7 +44,44 @@ $(document).ready(function() {
 
             index -= 1;
 
-            
+            $('.tweet').on('click', function() {
+                var userID = $(this).find(':first-child').attr('class');
+
+
+                $feed.html('');
+
+
+                var uniqueStreamIndex = streams.users[userID].length - 1;
+                while (uniqueStreamIndex >= 0) {
+                    var tweet = streams.users[userID][uniqueStreamIndex];
+                    var $tweet = $('<div></div>');
+
+                    var user = tweet.user;
+                    var $user = $('<a href="#specific"></a></br>');
+                    var tweetMessage = tweet.message;
+                    var $tweetMessage = $('<p></p>');
+                    $user.text('@' + user + ':');
+                    $user.addClass(user);
+                    $user.attr('id', 'name');
+
+                    $tweetMessage.text(tweetMessage);
+                    $tweetMessage.addClass('message');
+
+                    $tweet.append($user);
+                    $tweet.append($tweetMessage);
+                    $tweet.addClass('tweet');
+                    $tweet.addClass('specific');
+
+                    var $timeStamp = $('<div></div>');
+                    $timeStamp.text((tweet.created_at).format('readable'));
+                    $timeStamp.addClass('timeStamp');
+                    $timeStamp.appendTo($tweet);
+
+                    $tweet.appendTo($feed);
+
+                    uniqueStreamIndex -= 1;
+                }
+            })
         }
     }
 
